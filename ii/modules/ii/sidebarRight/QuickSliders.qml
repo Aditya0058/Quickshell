@@ -14,6 +14,7 @@ Rectangle {
 
     property var screen: root.QsWindow.window?.screen
     property var brightnessMonitor: Brightness.getMonitorForScreen(screen)
+    property real volumeValue: Audio.value
 
     implicitWidth: contentItem.implicitWidth + root.horizontalPadding * 2
     implicitHeight: contentItem.implicitHeight + root.verticalPadding * 2
@@ -57,9 +58,11 @@ Rectangle {
             active: Config.options.sidebar.quickSliders.showVolume
             sourceComponent: QuickSlider {
                 materialSymbol: "volume_up"
-                value: Audio.sink.audio.volume
+                value: root.volumeValue
                 onMoved: {
-                    Audio.sink.audio.volume = value
+                    // Use wpctl to set volume directly
+                    const percent = Math.round(value * 100)
+                    Quickshell.execDetached(["wpctl", "set-volume", "@DEFAULT_AUDIO_SINK@", `${percent}%`])
                 }
             }
         }
@@ -73,20 +76,21 @@ Rectangle {
             active: Config.options.sidebar.quickSliders.showMic
             sourceComponent: QuickSlider {
                 materialSymbol: "mic"
-                value: Audio.source.audio.volume
+                value: Audio.source?.audio?.volume ?? 0.5
                 onMoved: {
-                    Audio.source.audio.volume = value
+                    if (Audio.source?.audio)
+                        Audio.source.audio.volume = value
                 }
             }
         }
     }
 
-    component QuickSlider: StyledSlider { 
+    component QuickSlider: StyledSlider {
         id: quickSlider
         required property string materialSymbol
         configuration: StyledSlider.Configuration.M
         stopIndicatorValues: []
-        
+
         MaterialSymbol {
             id: icon
             property bool nearFull: quickSlider.value >= 0.9

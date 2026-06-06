@@ -199,8 +199,24 @@ Item { // Bar content region
         implicitWidth: rightSectionRowLayout.implicitWidth
         implicitHeight: Appearance.sizes.baseBarHeight
 
-        onScrollDown: Audio.decrementVolume();
-        onScrollUp: Audio.incrementVolume();
+        onScrollDown: {
+            // Get current volume, decrease by 5%, set new value
+            Quickshell.execDetached(["bash", "-c",
+                "current=$(wpctl get-volume @DEFAULT_AUDIO_SINK@ | awk '{print $3}' | tr -d '%'); " +
+                "new=$((current - 5)); " +
+                "[ $new -lt 0 ] && new=0; " +
+                "wpctl set-volume @DEFAULT_AUDIO_SINK@ ${new}%"
+            ])
+        }
+        onScrollUp: {
+            // Get current volume, increase by 5%, set new value
+            Quickshell.execDetached(["bash", "-c",
+                "current=$(wpctl get-volume @DEFAULT_AUDIO_SINK@ | awk '{print $3}' | tr -d '%'); " +
+                "new=$((current + 5)); " +
+                "[ $new -gt 150 ] && new=150; " +
+                "wpctl set-volume @DEFAULT_AUDIO_SINK@ ${new}%"
+            ])
+        }
         onMovedAway: GlobalStates.osdVolumeOpen = false;
         onPressed: event => {
             if (event.button === Qt.LeftButton) {
