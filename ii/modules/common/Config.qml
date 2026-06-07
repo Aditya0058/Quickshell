@@ -209,6 +209,12 @@ Singleton {
                         property real x: 400
                         property real y: 100
                     }
+                    property JsonObject dayname: JsonObject {
+                        property bool enable: true
+                        property string placementStrategy: "leastBusy" // "free", "leastBusy", "mostBusy"
+                        property real x: 150
+                        property real y: 500
+                    }
                 }
                 property string wallpaperPath: ""
                 property string thumbnailPath: ""
