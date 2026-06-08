@@ -38,11 +38,28 @@ MouseArea {
         Resource {
             iconName: "planner_review"
             percentage: ResourceUsage.cpuUsage
-            shown: Config.options.bar.resources.alwaysShowCpu || 
+            shown: Config.options.bar.resources.alwaysShowCpu ||
                 !(MprisController.activePlayer?.trackTitle?.length > 0) ||
                 root.alwaysShowAllResources
             Layout.leftMargin: shown ? 6 : 0
             warningThreshold: Config.options.bar.resources.cpuWarningThreshold
+        }
+
+        Resource {
+            iconName: "thermostat"
+            percentage: ResourceUsage.cpuTemperatureCelsius / 100
+            shown: Config.options.bar.resources.alwaysShowTemperature ||
+                root.alwaysShowAllResources
+            Layout.leftMargin: shown ? 6 : 0
+            warningThreshold: Config.options.bar.resources.temperatureWarningThreshold ?? 80
+        }
+
+        Resource {
+            iconName: "air"
+            percentage: ResourceUsage.fanLevel / 7
+            shown: Config.options.bar.resources.alwaysShowFan || root.alwaysShowAllResources
+            Layout.leftMargin: shown ? 6 : 0
+            warningThreshold: 5
         }
 
     }

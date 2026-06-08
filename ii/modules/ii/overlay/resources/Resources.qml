@@ -34,6 +34,20 @@ StyledOverlayWidget {
             "history": ResourceUsage.swapUsageHistory,
             "maxAvailableString": ResourceUsage.maxAvailableSwapString
         },
+        {
+            "icon": "thermostat",
+            "name": Translation.tr("Temperature"),
+            "history": [],
+            "maxAvailableString": "--",
+            "isTemperature": true
+        },
+        {
+            "icon": "air",
+            "name": Translation.tr("Fan"),
+            "history": [],
+            "maxAvailableString": "--",
+            "isFan": true
+        },
     ]
 
     contentItem: OverlayBackground {
@@ -86,7 +100,16 @@ StyledOverlayWidget {
         ColumnLayout {
             spacing: 2
             StyledText {
-                text: (resourceSummary.history[resourceSummary.history.length - 1] * 100).toFixed(1) + "%"
+                text: {
+                    const currentResource = root.resources[tabBar.currentIndex]
+                    if (currentResource?.isTemperature) {
+                        return ResourceUsage.cpuTemperatureCelsius.toFixed(1) + "°C"
+                    }
+                    if (currentResource?.isFan) {
+                        return "L" + ResourceUsage.fanLevel
+                    }
+                    return (resourceSummary.history[resourceSummary.history.length - 1] * 100).toFixed(1) + "%"
+                }
                 font {
                     family: Appearance.font.family.numbers
                     variableAxes: Appearance.font.variableAxes.numbers
@@ -94,7 +117,16 @@ StyledOverlayWidget {
                 }
             }
             StyledText {
-                text: Translation.tr("of %1").arg(resourceSummary.maxAvailableString)
+                text: {
+                    const currentResource = root.resources[tabBar.currentIndex]
+                    if (currentResource?.isTemperature) {
+                        return Translation.tr("CPU Package")
+                    }
+                    if (currentResource?.isFan) {
+                        return ResourceUsage.fanSpeed + " RPM"
+                    }
+                    return Translation.tr("of %1").arg(resourceSummary.maxAvailableString)
+                }
                 font {
                     // family: Appearance.font.family.numbers
                     // variableAxes: Appearance.font.variableAxes.numbers
@@ -112,7 +144,8 @@ StyledOverlayWidget {
             Layout.fillHeight: true
             radius: Appearance.rounding.small
             color: Appearance.colors.colSecondaryContainer
-            layer.enabled: true
+            visible: !root.resources[tabBar.currentIndex]?.isTemperature && !root.resources[tabBar.currentIndex]?.isFan
+            layer.enabled: visible
             layer.effect: OpacityMask {
                 maskSource: Rectangle {
                     width: graphBg.width

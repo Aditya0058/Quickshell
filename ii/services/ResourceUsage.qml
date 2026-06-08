@@ -21,6 +21,10 @@ Singleton {
     property real swapUsedPercentage: swapTotal > 0 ? (swapUsed / swapTotal) : 0
     property real cpuUsage: 0
     property var previousCpuStats
+    property real cpuTemperature: 0
+    property real cpuTemperatureCelsius: cpuTemperature / 1000
+    property int fanLevel: 0
+    property int fanSpeed: 0
 
     property string maxAvailableMemoryString: kbToGbString(ResourceUsage.memoryTotal)
     property string maxAvailableSwapString: kbToGbString(ResourceUsage.swapTotal)
@@ -67,6 +71,8 @@ Singleton {
             // Reload files
             fileMeminfo.reload()
             fileStat.reload()
+            fileThermal.reload()
+            fileFan.reload()
 
             // Parse memory and swap usage
             const textMeminfo = fileMeminfo.text()
@@ -92,6 +98,17 @@ Singleton {
                 previousCpuStats = { total, idle }
             }
 
+            // Parse CPU temperature (thermal_zone3 = x86_pkg_temp)
+            const textThermal = fileThermal.text()
+            root.cpuTemperature = Number(textThermal.trim()) || 0
+
+            // Parse ThinkPad fan level and speed
+            const textFan = fileFan.text()
+            const fanLevelMatch = textFan.match(/level:\s*(\d+)/)
+            const fanSpeedMatch = textFan.match(/speed:\s*(\d+)/)
+            root.fanLevel = fanLevelMatch ? Number(fanLevelMatch[1]) : 0
+            root.fanSpeed = fanSpeedMatch ? Number(fanSpeedMatch[1]) : 0
+
             root.updateHistories()
             interval = Config.options?.resources?.updateInterval ?? 3000
         }
@@ -99,6 +116,8 @@ Singleton {
 
 	FileView { id: fileMeminfo; path: "/proc/meminfo" }
     FileView { id: fileStat; path: "/proc/stat" }
+    FileView { id: fileThermal; path: "/sys/class/thermal/thermal_zone3/temp" }
+    FileView { id: fileFan; path: "/proc/acpi/ibm/fan" }
 
     Process {
         id: findCpuMaxFreqProc
