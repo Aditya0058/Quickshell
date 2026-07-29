@@ -39,16 +39,9 @@ MouseArea {
 
         Resource {
             Layout.alignment: Qt.AlignHCenter
-            iconName: "thermostat"
-            percentage: ResourceUsage.cpuTemperatureCelsius / 100
-            warningThreshold: Config.options.bar.resources.temperatureWarningThreshold ?? 80
-        }
-
-        Resource {
-            Layout.alignment: Qt.AlignHCenter
-            iconName: "air"
-            percentage: ResourceUsage.fanLevel / 7
-            warningThreshold: 5
+            iconName: "schedule"
+            percentage: ResourceUsage.dayRemainingPercentage
+            warningThreshold: 10
         }
 
     }

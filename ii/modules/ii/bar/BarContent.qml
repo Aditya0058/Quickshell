@@ -59,8 +59,8 @@ Item { // Bar content region
         implicitWidth: leftSectionRowLayout.implicitWidth
         implicitHeight: Appearance.sizes.baseBarHeight
 
-        onScrollDown: root.brightnessMonitor.setBrightness(root.brightnessMonitor.brightness - 0.05)
-        onScrollUp: root.brightnessMonitor.setBrightness(root.brightnessMonitor.brightness + 0.05)
+        onScrollDown: Brightness.decreaseBrightness()
+        onScrollUp: Brightness.increaseBrightness()
         onMovedAway: GlobalStates.osdBrightnessOpen = false
         onPressed: event => {
             if (event.button === Qt.LeftButton)
@@ -70,7 +70,7 @@ Item { // Bar content region
         // Visual content
         ScrollHint {
             reveal: barLeftSideMouseArea.hovered
-            icon: "light_mode"
+            icon: Hyprsunset.gamma === 100 ? "light_mode" : "wb_twilight"
             tooltipText: Translation.tr("Scroll to change brightness")
             side: "left"
             anchors.left: parent.left
@@ -199,24 +199,8 @@ Item { // Bar content region
         implicitWidth: rightSectionRowLayout.implicitWidth
         implicitHeight: Appearance.sizes.baseBarHeight
 
-        onScrollDown: {
-            // Get current volume, decrease by 5%, set new value
-            Quickshell.execDetached(["bash", "-c",
-                "current=$(wpctl get-volume @DEFAULT_AUDIO_SINK@ | awk '{print $3}' | tr -d '%'); " +
-                "new=$((current - 5)); " +
-                "[ $new -lt 0 ] && new=0; " +
-                "wpctl set-volume @DEFAULT_AUDIO_SINK@ ${new}%"
-            ])
-        }
-        onScrollUp: {
-            // Get current volume, increase by 5%, set new value
-            Quickshell.execDetached(["bash", "-c",
-                "current=$(wpctl get-volume @DEFAULT_AUDIO_SINK@ | awk '{print $3}' | tr -d '%'); " +
-                "new=$((current + 5)); " +
-                "[ $new -gt 150 ] && new=150; " +
-                "wpctl set-volume @DEFAULT_AUDIO_SINK@ ${new}%"
-            ])
-        }
+        onScrollDown: Audio.decrementVolume();
+        onScrollUp: Audio.incrementVolume();
         onMovedAway: GlobalStates.osdVolumeOpen = false;
         onPressed: event => {
             if (event.button === Qt.LeftButton) {
@@ -331,6 +315,19 @@ Item { // Bar content region
                         color: rightSidebarButton.colText
                     }
                 }
+            }
+
+            // Timer and Stopwatch widgets on right side
+            TimerWidget {
+                visible: Config.options.bar.verbose
+                Layout.alignment: Qt.AlignVCenter | Qt.AlignRight
+                Layout.rightMargin: 8
+            }
+
+            StopwatchWidget {
+                visible: Config.options.bar.verbose
+                Layout.alignment: Qt.AlignVCenter | Qt.AlignRight
+                Layout.rightMargin: 8
             }
 
             SysTray {

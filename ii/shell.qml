@@ -73,4 +73,5 @@ ShellRoot {
 
         onPressed: root.cyclePanelFamily()
     }
-}   
+}
+

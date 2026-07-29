@@ -21,10 +21,9 @@ Singleton {
     property real swapUsedPercentage: swapTotal > 0 ? (swapUsed / swapTotal) : 0
     property real cpuUsage: 0
     property var previousCpuStats
-    property real cpuTemperature: 0
-    property real cpuTemperatureCelsius: cpuTemperature / 1000
-    property int fanLevel: 0
-    property int fanSpeed: 0
+    property real temperature: 0
+    property real fanLevel: 0
+    property real dayRemainingPercentage: 1 // 0-1 range (1 = 100% day remaining)
 
     property string maxAvailableMemoryString: kbToGbString(ResourceUsage.memoryTotal)
     property string maxAvailableSwapString: kbToGbString(ResourceUsage.swapTotal)
@@ -65,7 +64,7 @@ Singleton {
 
 	Timer {
 		interval: 1
-        running: true 
+        running: true
         repeat: true
 		onTriggered: {
             // Reload files
@@ -100,14 +99,26 @@ Singleton {
 
             // Parse CPU temperature (thermal_zone3 = x86_pkg_temp)
             const textThermal = fileThermal.text()
-            root.cpuTemperature = Number(textThermal.trim()) || 0
+            const tempMatch = textThermal.match(/(\d+)/)
+            if (tempMatch) {
+                temperature = Number(tempMatch[1]) / 1000 // Convert millidegrees to degrees
+            }
 
-            // Parse ThinkPad fan level and speed
+            // Parse fan level
             const textFan = fileFan.text()
-            const fanLevelMatch = textFan.match(/level:\s*(\d+)/)
-            const fanSpeedMatch = textFan.match(/speed:\s*(\d+)/)
-            root.fanLevel = fanLevelMatch ? Number(fanLevelMatch[1]) : 0
-            root.fanSpeed = fanSpeedMatch ? Number(fanSpeedMatch[1]) : 0
+            const fanLine = textFan.split('\n').find(line => line.startsWith('level:'))
+            if (fanLine) {
+                const match = fanLine.match(/level:\s+(\d+)/)
+                if (match) {
+                    root.fanLevel = Number(match[1])
+                }
+            }
+
+            // Calculate day remaining percentage
+            const now = new Date()
+            const currentSeconds = now.getHours() * 3600 + now.getMinutes() * 60 + now.getSeconds()
+            const totalSecondsInDay = 86400
+            root.dayRemainingPercentage = 1 - (currentSeconds / totalSecondsInDay)
 
             root.updateHistories()
             interval = Config.options?.resources?.updateInterval ?? 3000

@@ -143,6 +143,14 @@ Singleton {
                     property real width: 460
                     property real height: 330
                 }
+                property JsonObject stopwatch: JsonObject {
+                    property bool pinned: false
+                    property bool clickthrough: false
+                    property real x: 1000
+                    property real y: 500
+                    property real width: 280
+                    property real height: 180
+                }
             }
 
             property JsonObject timer: JsonObject {

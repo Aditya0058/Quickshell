@@ -90,5 +90,41 @@ StyledPopup {
                 }
             }
         }
+
+        Column {
+            anchors.top: parent.top
+            spacing: 8
+
+            StyledPopupHeaderRow {
+                icon: "thermostat"
+                label: "Temperature"
+            }
+            Column {
+                spacing: 4
+                StyledPopupValueRow {
+                    icon: "device_thermostat"
+                    label: Translation.tr("CPU:")
+                    value: `${Math.round(ResourceUsage.temperature)}°C`
+                }
+            }
+        }
+
+        Column {
+            anchors.top: parent.top
+            spacing: 8
+
+            StyledPopupHeaderRow {
+                icon: "air"
+                label: "Fan"
+            }
+            Column {
+                spacing: 4
+                StyledPopupValueRow {
+                    icon: "mode_fan_off"
+                    label: Translation.tr("Level:")
+                    value: `${ResourceUsage.fanLevel}/7`
+                }
+            }
+        }
     }
 }
