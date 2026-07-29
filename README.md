@@ -35,10 +35,25 @@ This repository is not a complete rewrite. Most of the core code originates from
 ## Screenshots
 - HomeScreen
 <img width="1520" height="861" alt="image" src="https://github.com/user-attachments/assets/e08557cd-5df6-4a97-a2da-b8f792900a38" />
-------------------------------------------
+
 - Left-Side-Bar
 <img width="1520" height="861" alt="image" src="https://github.com/user-attachments/assets/bc9bee14-d1d3-4b77-baef-60f63822d8b4" />
-------------------------------------------
+
 -Right-Side-Bar
 <img width="1551" height="867" alt="image" src="https://github.com/user-attachments/assets/3c53ebf6-5e6f-48b9-bf6a-0e3fd304d33f" />
+
+- Some Settings
+<img width="1115" height="759" alt="image" src="https://github.com/user-attachments/assets/d04ceb1d-ef3b-4dd4-8ed5-73ee9e7eb836" />
+
+- Keybinds
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/29043e75-b79b-4dad-9f0e-a01d1faed183" />
+
+- Periodic Table
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/9fe715b2-c609-4ab6-8e6f-8cc4b143f14e" />
+
+- Lock Screen
+<img width="1519" height="862" alt="image" src="https://github.com/user-attachments/assets/af7ccce4-a930-4570-867e-5b79f8f0774d" />
+
+
+
 
