@@ -32,3 +32,6 @@ This repository is not a complete rewrite. Most of the core code originates from
 - Fix 1 - Fixed the volume slider in the right sidebar, Now it is functioning properly
 - Fix 2 - Fixed the volume scroll on right top side.
 
+## Screenshots
+- HomeScreen
+<img width="1520" height="861" alt="image" src="https://github.com/user-attachments/assets/e08557cd-5df6-4a97-a2da-b8f792900a38" /> 
