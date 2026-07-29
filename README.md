@@ -39,7 +39,7 @@ This repository is not a complete rewrite. Most of the core code originates from
 - Left-Side-Bar
 <img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/bc9bee14-d1d3-4b77-baef-60f63822d8b4" />
 
--Right-Side-Bar
+- Right-Side-Bar
 <img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/3c53ebf6-5e6f-48b9-bf6a-0e3fd304d33f" />
 
 - Some Settings
