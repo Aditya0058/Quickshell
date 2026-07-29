@@ -34,4 +34,8 @@ This repository is not a complete rewrite. Most of the core code originates from
 
 ## Screenshots
 - HomeScreen
-<img width="1520" height="861" alt="image" src="https://github.com/user-attachments/assets/e08557cd-5df6-4a97-a2da-b8f792900a38" /> 
+<img width="1520" height="861" alt="image" src="https://github.com/user-attachments/assets/e08557cd-5df6-4a97-a2da-b8f792900a38" />
+
+- Left-Side-Bar
+<img width="1520" height="861" alt="image" src="https://github.com/user-attachments/assets/bc9bee14-d1d3-4b77-baef-60f63822d8b4" />
+
