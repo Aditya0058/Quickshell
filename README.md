@@ -24,6 +24,7 @@ This repository is not a complete rewrite. Most of the core code originates from
 - Feature 1 - Changed the lockscren ui completely
 - Fearure 2 - Added widgets on waybar for Temperature Value, ThinkPad Fan level, ThinkPad ON/OFF Displayer
 - Feature 3 - Added keybing for toggle of ThinkPad Fan OFF/ON
+- Feature 4 - Added percentage based time on navbar.
 
 
 ## Fixes
