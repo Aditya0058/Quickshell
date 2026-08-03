@@ -58,5 +58,8 @@ This repository is not a complete rewrite. Most of the core code originates from
 - Music Player
 <img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/813bf07c-9669-4526-897e-f2c93cb7f76a" />
 
+- Monthly Goal Widget
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/e2fe68a1-7974-4da1-be32-9f18d2f6b744" />
+
 
 
