@@ -26,6 +26,7 @@ This repository is not a complete rewrite. Most of the core code originates from
 - Feature 3 - Added keybing for toggle of ThinkPad Fan OFF/ON
 - Feature 4 - Added percentage based time on navbar.
 - Feature 5 - Added one-click Timer and Stopwatch on navbar.
+- Feature 6 - Added Monthly Goals widget on homescreen.
 
 ## Fixes
 
