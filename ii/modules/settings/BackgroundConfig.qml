@@ -614,4 +614,62 @@ ContentPage {
             }
         }
     }
+
+    ContentSection {
+        icon: "track_changes"
+        title: Translation.tr("Widget: Monthly Goals")
+
+        ConfigRow {
+            Layout.fillWidth: true
+
+            ConfigSwitch {
+                Layout.fillWidth: false
+                buttonIcon: "check"
+                text: Translation.tr("Enable")
+                checked: Config.options.background.widgets.monthlyGoals.enable
+                onCheckedChanged: {
+                    Config.options.background.widgets.monthlyGoals.enable = checked;
+                }
+            }
+            Item {
+                Layout.fillWidth: true
+            }
+            ConfigSelectionArray {
+                Layout.fillWidth: false
+                currentValue: Config.options.background.widgets.monthlyGoals.placementStrategy
+                onSelected: newValue => {
+                    Config.options.background.widgets.monthlyGoals.placementStrategy = newValue;
+                }
+                options: [
+                    {
+                        displayName: Translation.tr("Draggable"),
+                        icon: "drag_pan",
+                        value: "free"
+                    },
+                    {
+                        displayName: Translation.tr("Least busy"),
+                        icon: "category",
+                        value: "leastBusy"
+                    },
+                    {
+                        displayName: Translation.tr("Most busy"),
+                        icon: "shapes",
+                        value: "mostBusy"
+                    },
+                ]
+            }
+        }
+
+        ConfigSwitch {
+            buttonIcon: "expand_more"
+            text: Translation.tr("Expanded by default")
+            checked: Config.options.background.widgets.monthlyGoals.expanded
+            onCheckedChanged: {
+                Config.options.background.widgets.monthlyGoals.expanded = checked;
+            }
+            StyledToolTip {
+                text: Translation.tr("When enabled, the widget opens expanded showing your goal list. Otherwise it shows the compact pill view.")
+            }
+        }
+    }
 }

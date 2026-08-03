@@ -18,6 +18,15 @@ AbstractWidget {
     property bool visibleWhenLocked: false
     property var configEntry: Config.options.background.widgets[configEntryName]
     property string placementStrategy: configEntry.placementStrategy
+    // Convenience: persist a per-widget "expanded" flag in config so widgets
+    // (e.g. the Monthly Goals card) can remember whether they were open or
+    // collapsed across shell restarts. Returns false if the field doesn't exist.
+    property bool expanded: configEntry.expanded === true
+    function setExpanded(value) {
+        if (configEntry && configEntry.expanded !== undefined) {
+            configEntry.expanded = value;
+        }
+    }
     property real targetX: Math.max(0, Math.min(configEntry.x, scaledScreenWidth - width))
     property real targetY : Math.max(0, Math.min(configEntry.y, scaledScreenHeight - height))
     x: targetX

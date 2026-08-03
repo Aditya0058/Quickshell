@@ -35,6 +35,9 @@ Singleton {
     property string shellConfigPath: `${Directories.shellConfig}/${Directories.shellConfigName}`
 	property string todoPath: FileUtils.trimFileProtocol(`${Directories.state}/user/todo.json`)
 	property string notesPath: FileUtils.trimFileProtocol(`${Directories.state}/user/notes.txt`)
+	property string monthlyGoalsDir: FileUtils.trimFileProtocol(`${Directories.state}/user/monthly-goals`)
+	property string monthlyGoalsPath: FileUtils.trimFileProtocol(`${Directories.monthlyGoalsDir}/current.json`)
+	property string monthlyGoalsArchiveDir: FileUtils.trimFileProtocol(`${Directories.monthlyGoalsDir}/archive`)
 	property string conflictCachePath: FileUtils.trimFileProtocol(`${Directories.cache}/conflict-killer`)
     property string notificationsPath: FileUtils.trimFileProtocol(`${Directories.cache}/notifications/notifications.json`)
     property string generatedMaterialThemePath: FileUtils.trimFileProtocol(`${Directories.state}/user/generated/colors.json`)
@@ -61,6 +64,8 @@ Singleton {
         Quickshell.execDetached(["bash", "-c", `rm -rf '${cliphistDecode}'; mkdir -p '${cliphistDecode}'`])
         Quickshell.execDetached(["mkdir", "-p", `${aiChats}`])
         Quickshell.execDetached(["mkdir", "-p", `${userActions}`])
+        Quickshell.execDetached(["mkdir", "-p", `${monthlyGoalsDir}`])
+        Quickshell.execDetached(["mkdir", "-p", `${monthlyGoalsArchiveDir}`])
         Quickshell.execDetached(["rm", "-rf", `${tempImages}`])
     }
 }

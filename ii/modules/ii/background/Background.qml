@@ -17,6 +17,7 @@ import Quickshell.Hyprland
 import qs.modules.ii.background.widgets
 import qs.modules.ii.background.widgets.clock
 import qs.modules.ii.background.widgets.weather
+import qs.modules.ii.background.widgets.monthlyGoals
 
 Variants {
     id: root
@@ -77,6 +78,10 @@ Variants {
         WlrLayershell.layer: (GlobalStates.screenLocked && !scaleAnim.running) ? WlrLayer.Overlay : WlrLayer.Bottom
         // WlrLayershell.layer: WlrLayer.Bottom
         WlrLayershell.namespace: "quickshell:background"
+        // Allow keyboard input when a child (e.g. a TextField) requests focus.
+        // OnDemand means keyboard only routes to this surface when the focused
+        // QML item is inside it — global shortcuts on other layers still work.
+        WlrLayershell.keyboardFocus: WlrKeyboardFocus.OnDemand
         anchors {
             top: true
             bottom: true
@@ -274,6 +279,17 @@ Variants {
                         scaledScreenHeight: bgRoot.screen.height
                         wallpaperScale: 1
                         wallpaperSafetyTriggered: bgRoot.wallpaperSafetyTriggered
+                    }
+                }
+
+                FadeLoader {
+                    shown: Config.options.background.widgets.monthlyGoals.enable
+                    sourceComponent: MonthlyGoalsWidget {
+                        screenWidth: bgRoot.screen.width
+                        screenHeight: bgRoot.screen.height
+                        scaledScreenWidth: bgRoot.screen.width
+                        scaledScreenHeight: bgRoot.screen.height
+                        wallpaperScale: 1
                     }
                 }
             }
